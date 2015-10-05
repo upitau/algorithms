@@ -3,12 +3,13 @@ package com.upit.algo.symboltable;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class ArraySymbolTable<K extends Comparable<K>, V> {
+public class ArraySymbolTable<K extends Comparable<K>, V> implements SymbolTable<K,V> {
     private static int MIN_SIZE = 16;
 
     private Entry<K, V>[] items = (Entry<K, V>[]) new Entry[MIN_SIZE];
     private int size = 0;
 
+    @Override
     public void put(K key, V value) {
         if (size == items.length) {
             items = Arrays.copyOf(items, size * 2);
@@ -23,6 +24,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         items[rank] = new Entry<>(key, value);
     }
 
+    @Override
     public V get(K key) {
         int rank = rank(key);
         if (rank < size && key.equals(items[rank].key)) {
@@ -31,6 +33,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         return null;
     }
 
+    @Override
     public void delete(K key) {
         int rank = rank(key);
         if (rank < size && key.equals(items[rank].key)) {
@@ -49,23 +52,28 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         }
     }
 
+    @Override
     public boolean contains(K key) {
         return get(key) != null;
     }
 
+    @Override
     public boolean isEmpty() {
         return size == 0;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     public K min() {
         checkNotEmpty();
         return items[0].key;
     }
 
+    @Override
     public K max() {
         checkNotEmpty();
         return items[size - 1].key;
@@ -77,6 +85,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         }
     }
 
+    @Override
     public K floor(K key) {
         if (isEmpty()) {
             return null;
@@ -92,6 +101,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         }
     }
 
+    @Override
     public K ceiling(K key) {
         if (isEmpty()) {
             return null;
@@ -101,6 +111,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         return rank < size ? items[rank].key : null;
     }
 
+    @Override
     public int rank(K key) {
         int lo = 0;
         int hi = size - 1;
@@ -118,6 +129,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         return lo;
     }
 
+    @Override
     public K select(int index) {
         if (index >= size) {
             throw new IllegalArgumentException("There are not item with index: " + index);
@@ -126,6 +138,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         return items[index].key;
     }
 
+    @Override
     public void deleteMin() {
         for (int i = 1; i < size; i++) {
             items[i - 1] = items[i];
@@ -133,23 +146,25 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         deleteMax();
     }
 
+    @Override
     public void deleteMax() {
         items[--size] = null;
         shrinkItems();
         }
 
+    @Override
     public int size(K lo, K hi) {
         checkNotEmpty();
 
-        K floor = floor(lo);
-        int from = floor == null ? 0 : rank(floor);
-        K ceiling = ceiling(hi);
-        int to = ceiling == null ? size - 1 : rank(ceiling);
+        K from = ceiling(lo);
+        int fromIndex = from == null ? size : rank(from);
+        K to = floor(hi);
+        int toIndex = to == null ? 0 : rank(to);
 
-        return Math.max(0, to - from + 1);
+        return Math.max(0, toIndex - fromIndex + 1);
     }
 
-    Iterable<K> keys(K lo, K hi) {
+    public Iterable<K> keys(K lo, K hi) {
         checkNotEmpty();
 
         K from = ceiling(lo);
@@ -160,7 +175,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> {
         return new ItemIterator(fromIndex, toIndex);
     }
 
-    Iterable<K> keys() {
+    public Iterable<K> keys() {
         checkNotEmpty();
         return new ItemIterator(0, size - 1);
     }
