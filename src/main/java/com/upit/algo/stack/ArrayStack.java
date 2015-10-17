@@ -45,7 +45,7 @@ public class ArrayStack<T> implements Stack<T> {
     }
 
     private void shrinkCapacity() {
-        if (n > 0 && n == items.length / 4) {
+        if (items.length >= 2 * DEFAULT_CAPACITY && n == items.length / 4) {
             Object[] oldItems = items;
             items = new Object[items.length / 2];
             System.arraycopy(oldItems, 0, items, 0, n);

@@ -70,7 +70,7 @@ public class MaxPriorityQueue {
     }
 
     private int firstChild(int index) {
-        return (index + 1) * 2 - 1;
+        return index * 2 + 1;
     }
 
     private boolean less(int i, int j) {
