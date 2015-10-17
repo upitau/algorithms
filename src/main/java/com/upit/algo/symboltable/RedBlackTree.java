@@ -3,11 +3,15 @@ package com.upit.algo.symboltable;
 import com.upit.algo.queue.ArrayQueue;
 import com.upit.algo.queue.Queue;
 
-public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymbolTable<K, V> {
+public class RedBlackTree<K extends Comparable<K>, V> implements OrderedSymbolTable<K, V> {
+    private static boolean RED = true;
+    private static boolean BLACK = false;
+
     private Node<K, V> root;
 
     public void put(K key, V value) {
         root = put(root, key, value);
+        root.colour = BLACK;
     }
 
     private Node<K, V> put(Node<K, V> node, K key, V value) {
@@ -23,7 +27,41 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         } else {
             node.value = value;
         }
-        node.size = size(node.left) + size(node.right) + 1;
+//        node.size = size(node.left) + size(node.right) + 1;
+        if (!isRed(node.left) && isRed(node.right)) {
+            node = rotateLeft(node);
+        }
+        if (isRed(node.left) && isRed(node.left.left)) {
+            node = rotateRight(node);
+        }
+        if (isRed(node.left) && isRed(node.right)) {
+            node = flipColour(node);
+        }
+        return node;
+    }
+
+    private Node<K, V> rotateLeft(Node<K, V> node) {
+        Node<K, V> rightChild = node.right;
+        node.right = rightChild.left;
+        rightChild.left = node;
+        rightChild.colour = node.colour;
+        node.colour = RED;
+        return rightChild;
+    }
+
+    private Node<K, V> rotateRight(Node<K, V> node) {
+        Node<K, V> leftChild = node.left;
+        node.left = leftChild.right;
+        leftChild.right = node;
+        leftChild.colour = node.colour;
+        node.colour = RED;
+        return leftChild;
+    }
+
+    private Node<K, V> flipColour(Node<K, V> node) {
+        node.left.colour = BLACK;
+        node.right.colour = BLACK;
+        node.colour = RED;
         return node;
     }
 
@@ -43,7 +81,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
     }
 
     public void delete(K key) {
-        root = delete(root, key);
+//        root = delete(root, key);
     }
 
     private Node<K, V> delete(Node<K, V> node, K key) {
@@ -83,11 +121,13 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public int size() {
-        return size(root);
+//        return size(root);
+        return 0;
     }
 
     private int size(Node<K, V> node) {
-        return node == null ? 0 : node.size;
+//        return node == null ? 0 : node.size;
+        return 0;
     }
 
     @Override
@@ -155,7 +195,8 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public int rank(K key) {
-        return rank(root, key);
+//        return rank(root, key);
+        return 0;
     }
 
     private int rank(Node<K, V> node, K key) {
@@ -175,8 +216,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public K select(int index) {
-        Node<K, V> node = select(root, index);
-        return node == null ? null : node.key;
+//        Node<K, V> node = select(root, index);
+//        return node == null ? null : node.key;
+        return null;
     }
 
     private Node<K, V> select(Node<K, V> node, int index) {
@@ -196,14 +238,21 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public void deleteMin() {
+        if (isEmpty()) {
+            return;
+        }
+
         root = deleteMin(root);
+        if (!isEmpty()) {
+            root.colour = BLACK;
+        }
     }
 
     private Node<K, V> deleteMin(Node<K, V> node) {
-        if (node == null) {
+        if (node.left == null) {
             return null;
         }
-        if (node.left == null) {
+        if (isRed(node.left) && isRed(node.left.left)) {
             return node.right;
         } else {
             node.left = deleteMin(node.left);
@@ -215,7 +264,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public void deleteMax() {
-        root = deleteMax(root);
+//        root = deleteMax(root);
     }
 
     private Node<K, V> deleteMax(Node<K, V> node) {
@@ -233,12 +282,13 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
 
     @Override
     public int size(K lo, K hi) {
-        if (hi.compareTo(lo) < 0) {
-            throw new IllegalArgumentException(String.format("hi (%s) is less then lo (%s)", hi, lo));
-        }
-        K from = ceiling(lo);
-        K to = floor(hi);
-        return (from == null || to == null) ? 0 : Math.max(0, rank(to) - rank(from) + 1) ;
+//        if (hi.compareTo(lo) < 0) {
+//            throw new IllegalArgumentException(String.format("hi (%s) is less then lo (%s)", hi, lo));
+//        }
+//        K from = ceiling(lo);
+//        K to = floor(hi);
+//        return (from == null || to == null) ? 0 : Math.max(0, rank(to) - rank(from) + 1) ;
+        return 0;
     }
 
     @Override
@@ -265,6 +315,10 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         addKeysInOrder(queue, node.right, lo, hi);
     }
 
+    private boolean isRed(Node<K, V> node) {
+        return node != null && node.colour == RED;
+    }
+
 
     private static class Node<K extends Comparable<K>, V> {
         private K key;
@@ -272,10 +326,16 @@ public class BinarySearchTree<K extends Comparable<K>, V> implements OrderedSymb
         private Node<K, V> left;
         private Node<K, V> right;
         private int size = 1;
+        private boolean colour = RED;
 
         public Node(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%s{%s,%s}", key, left, right);
         }
     }
 }

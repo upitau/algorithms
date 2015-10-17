@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class ArraySymbolTableTest extends AbstractSymbolTableTest {
+public class ArraySymbolTableTest extends AbstractOrderedSymbolTableTest {
 
     public ArraySymbolTableTest() {
         symbolTable = new ArraySymbolTable<>();

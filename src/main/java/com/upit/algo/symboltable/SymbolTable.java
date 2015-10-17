@@ -1,6 +1,6 @@
 package com.upit.algo.symboltable;
 
-public interface SymbolTable<K extends Comparable<K>, V> {
+public interface SymbolTable<K, V> {
     void put(K key, V value);
 
     V get(K key);
@@ -13,25 +13,5 @@ public interface SymbolTable<K extends Comparable<K>, V> {
 
     int size();
 
-    K min();
-
-    K max();
-
-    K floor(K key);
-
-    K ceiling(K key);
-
-    int rank(K key);
-
-    K select(int index);
-
-    void deleteMin();
-
-    void deleteMax();
-
-    int size(K lo, K hi);
-
     Iterable<K> keys();
-
-    Iterable<K> keys(K lo, K hi);
 }

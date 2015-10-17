@@ -3,7 +3,7 @@ package com.upit.algo.symboltable;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class ArraySymbolTable<K extends Comparable<K>, V> implements SymbolTable<K,V> {
+public class ArraySymbolTable<K extends Comparable<K>, V> implements OrderedSymbolTable<K,V> {
     private static int MIN_SIZE = 16;
 
     private Entry<K, V>[] items = (Entry<K, V>[]) new Entry[MIN_SIZE];
