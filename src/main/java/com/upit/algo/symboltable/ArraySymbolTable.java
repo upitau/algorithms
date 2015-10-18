@@ -16,7 +16,7 @@ public class ArraySymbolTable<K extends Comparable<K>, V> implements OrderedSymb
         }
         int rank = rank(key);
         if (rank >= size || !key.equals(items[rank].key)) {
-            for (int i = size - 1; i >= rank; i --) {
+            for (int i = size - 1; i >= rank; i--) {
                 items[i + 1] = items[i];
             }
             size++;
