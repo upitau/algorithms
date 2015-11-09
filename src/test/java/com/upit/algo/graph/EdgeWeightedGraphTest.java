@@ -2,7 +2,10 @@ package com.upit.algo.graph;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -51,6 +54,18 @@ public class EdgeWeightedGraphTest {
     public void shouldReturnNumberOfEdges() {
         graph.addEdge(new Edge(1, 2, 10));
         assertThat(graph.numberOfEdges(), is(1));
+    }
+
+    @Test
+    public void shouldReturnEdges() {
+        graph.addEdge(new Edge(1, 2, 10));
+        graph.addEdge(new Edge(3, 0, 11));
+
+        Set<Edge> actual = StreamSupport.stream(graph.edges().spliterator(), false).collect(Collectors.toSet());
+        assertThat(actual.size(), is(2));
+
+        Set<Edge> expected = new HashSet<>(Arrays.asList(new Edge(1, 2, 10), new Edge(3, 0, 11)));
+        assertThat(actual, is(expected));
     }
 
     private List<Edge> toList(Iterable<Edge> iterable) {

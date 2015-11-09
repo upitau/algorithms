@@ -33,4 +33,28 @@ public class Edge implements Comparable<Edge> {
             return 0;
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Edge edge = (Edge) o;
+
+        if (v != edge.v) return false;
+        if (w != edge.w) return false;
+        return Double.compare(edge.weight, weight) == 0;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = v;
+        result = 31 * result + w;
+        temp = Double.doubleToLongBits(weight);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }

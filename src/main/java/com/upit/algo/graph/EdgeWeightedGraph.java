@@ -31,10 +31,22 @@ public class EdgeWeightedGraph {
 
     public int numberOfEdges() {
         int numberOfEdges = 0;
-        for (int v = 0; v < numberOfVertices(); v++) {
-            numberOfEdges += adjacencyLists[v].size();
+        for (int vertex = 0; vertex < numberOfVertices(); vertex++) {
+            numberOfEdges += adjacencyLists[vertex].size();
         }
         return numberOfEdges / 2;
+    }
+
+    public Iterable<Edge> edges() {
+        List<Edge> edges = new ArrayList<>();
+        for (int vertex = 0; vertex < numberOfVertices(); vertex++) {
+            for (Edge edge: adjacentTo(vertex)) {
+                if (edge.other(vertex) > vertex) {
+                    edges.add(edge);
+                }
+            }
+        }
+        return edges;
     }
 
 }
