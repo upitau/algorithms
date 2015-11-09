@@ -1,7 +1,5 @@
 package com.upit.algo.graph;
 
-import com.upit.algo.stack.Stack;
-
 import java.util.Arrays;
 
 public class KosarajuSharirStronglyConnectedComponents {
@@ -10,7 +8,7 @@ public class KosarajuSharirStronglyConnectedComponents {
     private int[] id;
     private int count;
 
-    public KosarajuSharirStronglyConnectedComponents(DirectedGraph graph) {
+    public KosarajuSharirStronglyConnectedComponents(Digraph graph) {
         id = new int[graph.numberOfVertices()];
         Arrays.fill(id, UNDEFINED);
 
@@ -30,7 +28,7 @@ public class KosarajuSharirStronglyConnectedComponents {
         return id[vertex];
     }
 
-    private void dfs(DirectedGraph graph, int vertex) {
+    private void dfs(Digraph graph, int vertex) {
         id[vertex] = count;
         for (int adjacentVertex: graph.adjacentTo(vertex)) {
             if (id[adjacentVertex] == UNDEFINED) {

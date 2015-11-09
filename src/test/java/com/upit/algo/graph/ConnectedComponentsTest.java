@@ -11,7 +11,7 @@ public class ConnectedComponentsTest {
 
     @Before
     public void init() {
-        UndirectedGraph graph = new UndirectedGraph(6);
+        Graph graph = new Graph(6);
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         graph.addEdge(2, 0);

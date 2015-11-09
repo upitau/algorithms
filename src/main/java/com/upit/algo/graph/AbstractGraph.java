@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractGraph implements Graph {
+public abstract class AbstractGraph {
     protected List<Integer>[] adjacencyLists;
 
     public AbstractGraph(int numberOfVertices) {
@@ -14,12 +14,10 @@ public abstract class AbstractGraph implements Graph {
         }
     }
 
-    @Override
     public Iterable<Integer> adjacentTo(int vertex) {
         return Collections.unmodifiableList(adjacencyLists[vertex]);
     }
 
-    @Override
     public int numberOfVertices() {
         return adjacencyLists.length;
     }

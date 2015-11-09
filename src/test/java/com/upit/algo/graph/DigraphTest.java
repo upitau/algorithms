@@ -9,9 +9,9 @@ import java.util.stream.StreamSupport;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class UndirectedGraphTest {
+public class DigraphTest {
 
-    private UndirectedGraph graph = new UndirectedGraph(5);
+    private Digraph graph = new Digraph(5);
 
     @Test
     public void shouldCreateGraphWithoutEdges() {
@@ -23,7 +23,7 @@ public class UndirectedGraphTest {
     public void shouldAddEdge() {
         graph.addEdge(1, 2);
         assertThat(StreamSupport.stream(graph.adjacentTo(1).spliterator(), false).anyMatch(new Integer(2)::equals), is(true));
-        assertThat(StreamSupport.stream(graph.adjacentTo(2).spliterator(), false).anyMatch(new Integer(1)::equals), is(true));
+        assertThat(StreamSupport.stream(graph.adjacentTo(2).spliterator(), false).anyMatch(new Integer(1)::equals), is(false));
     }
 
     @Test
@@ -50,33 +50,6 @@ public class UndirectedGraphTest {
     public void shouldReturnNumberOfEdges() {
         graph.addEdge(1, 2);
         assertThat(graph.numberOfEdges(), is(1));
-    }
-
-    @Test
-    public void shouldReturnDegree() {
-        graph.addEdge(1, 2);
-        assertThat(graph.degree(1), is(1));
-    }
-
-    @Test
-    public void shouldReturnMaxDegree() {
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        assertThat(graph.maxDegree(), is(2));
-    }
-
-    @Test
-    public void shouldReturnAverageDegree() {
-        graph.addEdge(1, 2);
-        graph.addEdge(2, 3);
-        assertThat(graph.averageDegree(), is(0.8));
-    }
-
-    @Test
-    public void shouldReturnNumberOfSelfLoops() {
-        graph.addEdge(1, 1);
-        graph.addEdge(2, 2);
-        assertThat(graph.numberOfSelfLoops(), is(2));
     }
 
 }

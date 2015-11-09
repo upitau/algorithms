@@ -17,7 +17,7 @@ public class DepthFirstSearchPathsTest {
 
     @Before
     public void init() {
-        UndirectedGraph graph = new UndirectedGraph(4);
+        Graph graph = new Graph(4);
         graph.addEdge(0, 1);
         graph.addEdge(1, 2);
         paths = new DepthFirstSearchPaths(graph, 0);

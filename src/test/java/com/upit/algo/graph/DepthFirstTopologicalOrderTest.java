@@ -16,7 +16,7 @@ public class DepthFirstTopologicalOrderTest {
 
     @Before
     public void init() {
-        DirectedGraph graph = new DirectedGraph(7);
+        Digraph graph = new Digraph(7);
         graph.addEdge(0, 1);
         graph.addEdge(0, 5);
         graph.addEdge(0, 2);

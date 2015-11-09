@@ -11,7 +11,7 @@ public class KosarajuSharirStronglyConnectedComponentsTest {
 
     @Before
     public void init() {
-        DirectedGraph graph = new DirectedGraph(13);
+        Digraph graph = new Digraph(13);
         graph.addEdge(0, 5);
         graph.addEdge(0, 1);
         graph.addEdge(2, 0);

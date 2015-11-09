@@ -1,17 +1,15 @@
 package com.upit.algo.graph;
 
-public class DirectedGraph extends AbstractGraph {
+public class Digraph extends AbstractGraph {
 
-    public DirectedGraph(int numberOfVertices) {
+    public Digraph(int numberOfVertices) {
         super(numberOfVertices);
     }
 
-    @Override
     public void addEdge(int vertexFrom, int vertexTo) {
         adjacencyLists[vertexFrom].add(vertexTo);
     }
 
-    @Override
     public int numberOfEdges() {
         int numberOfEdges = 0;
         for (int v = 0; v < numberOfVertices(); v++) {
@@ -20,8 +18,8 @@ public class DirectedGraph extends AbstractGraph {
         return numberOfEdges;
     }
 
-    public DirectedGraph reverse() {
-        DirectedGraph reverseGraph = new DirectedGraph(numberOfVertices());
+    public Digraph reverse() {
+        Digraph reverseGraph = new Digraph(numberOfVertices());
         for (int vertex = 0; vertex < numberOfVertices(); vertex++) {
             for (int adjacentVertex: adjacentTo(vertex)) {
                 reverseGraph.addEdge(adjacentVertex, vertex);

@@ -7,7 +7,7 @@ public class DepthFirstTopologicalOrder {
     private boolean[] marked;
     private Stack<Integer> reverseOrder = new ArrayStack<>();
 
-    public DepthFirstTopologicalOrder(DirectedGraph graph) {
+    public DepthFirstTopologicalOrder(Digraph graph) {
         marked = new boolean[graph.numberOfVertices()];
         for (int vertex = 0; vertex < graph.numberOfVertices(); vertex++) {
             if (!marked[vertex]) {
@@ -16,7 +16,7 @@ public class DepthFirstTopologicalOrder {
         }
     }
 
-    private void dfs(DirectedGraph graph, int vertex) {
+    private void dfs(Digraph graph, int vertex) {
         marked[vertex] = true;
         for (int adjacentVertex: graph.adjacentTo(vertex)) {
             if (!marked[adjacentVertex]) {

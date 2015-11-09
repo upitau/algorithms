@@ -8,7 +8,7 @@ public class ConnectedComponents {
     private int[] id;
     private int count;
 
-    public ConnectedComponents(UndirectedGraph graph) {
+    public ConnectedComponents(Graph graph) {
         id = new int[graph.numberOfVertices()];
         Arrays.fill(id, UNDEFINED);
 
@@ -28,7 +28,7 @@ public class ConnectedComponents {
         return id[vertex];
     }
 
-    private void dfs(UndirectedGraph graph, int vertex) {
+    private void dfs(Graph graph, int vertex) {
         id[vertex] = count;
         for (int adjacentVertex: graph.adjacentTo(vertex)) {
             if (id[adjacentVertex] == UNDEFINED) {
