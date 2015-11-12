@@ -47,9 +47,9 @@ public class MaxPriorityQueueTest {
         maxPriorityQueue.insert(3);
         maxPriorityQueue.insert(20);
         maxPriorityQueue.insert(1);
-        maxPriorityQueue.removeMax();
         maxPriorityQueue.insert(12);
         maxPriorityQueue.insert(-6);
+        maxPriorityQueue.removeMax();
         assertThat(maxPriorityQueue.removeMax(), is(12));
     }
 

@@ -7,24 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class KruskalMinimumSpanningTree implements MinimumSpanningTree {
-    private UnionFind unionFind;
+public class KruskalMST implements MinSpanningTree {
     private List<Edge> mst = new ArrayList<>();
 
-    public KruskalMinimumSpanningTree(EdgeWeightedGraph graph) {
-        unionFind = new QuickUnion(graph.numberOfVertices());
+    public KruskalMST(EdgeWeightedGraph graph) {
         PriorityQueue<Edge> queue = new PriorityQueue<>();
         for (Edge edge: graph.edges()) {
             queue.add(edge);
         }
 
-        while(mst.size() < graph.numberOfVertices() - 1) {
-            Edge edge = queue.poll();
+        UnionFind unionFind = new QuickUnion(graph.numberOfVertices());
+        while(!queue.isEmpty() && mst.size() < graph.numberOfVertices() - 1) {
+            Edge edge = queue.remove();
             int v = edge.either();
             int w = edge.other(v);
             if (!unionFind.connected(v, w)) {
-                mst.add(edge);
                 unionFind.union(v, w);
+                mst.add(edge);
             }
         }
     }
@@ -32,14 +31,5 @@ public class KruskalMinimumSpanningTree implements MinimumSpanningTree {
     @Override
     public Iterable<Edge> edges() {
         return mst;
-    }
-
-    @Override
-    public double weight() {
-        double weight = 0;
-        for (Edge edge: edges()) {
-            weight += edge.weight();
-        }
-        return weight;
     }
 }

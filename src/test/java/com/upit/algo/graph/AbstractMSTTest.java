@@ -11,8 +11,8 @@ import java.util.stream.StreamSupport;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class KruskalMinimumSpanningTreeTest {
-    private MinimumSpanningTree mst;
+public abstract class AbstractMSTTest {
+    private MinSpanningTree mst;
 
     @Before
     public void init() {
@@ -34,8 +34,10 @@ public class KruskalMinimumSpanningTreeTest {
         graph.addEdge(new Edge(6, 2, 0.40));
         graph.addEdge(new Edge(6, 4, 0.93));
 
-        mst = new KruskalMinimumSpanningTree(graph);
+        mst = createMST(graph);
     }
+
+    abstract protected MinSpanningTree createMST(EdgeWeightedGraph graph);
 
     @Test
     public void shouldFindMST() {
