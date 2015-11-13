@@ -1,5 +1,7 @@
 package com.upit.algo.graph;
 
+import com.upit.algo.queue.ArrayQueue;
+import com.upit.algo.queue.Queue;
 import com.upit.algo.stack.ArrayStack;
 import com.upit.algo.stack.Stack;
 
@@ -8,19 +10,27 @@ import java.util.Arrays;
 public class BellmanFordShortestPaths implements ShortestPaths {
     private DirectedEdge[] edgeTo;
     private double[] distanceTo;
+    private Queue<Integer> vertices = new ArrayQueue<>();
+    private boolean[] enqueuedVertices;
 
     public BellmanFordShortestPaths(EdgeWeightedDigraph graph) {
         edgeTo = new DirectedEdge[graph.numberOfVertices()];
         distanceTo = new double[graph.numberOfVertices()];
+        enqueuedVertices = new boolean[graph.numberOfVertices()];
 
         Arrays.fill(distanceTo, Double.MAX_VALUE);
         distanceTo[0] = 0;
 
-        for (int i = 0; i < graph.numberOfVertices(); i++) {
-            for (int vertex = 0; vertex < graph.numberOfVertices(); vertex++) {
-                for (DirectedEdge edge: graph.adjacentTo(vertex)) {
-                    relax(edge);
-                }
+        for (int vertex = 0; vertex < graph.numberOfVertices(); vertex++) {
+            vertices.enqueue(vertex);
+            enqueuedVertices[vertex] = true;
+        }
+
+        while (!vertices.isEmpty()) {
+            int vertex = vertices.dequeue();
+            enqueuedVertices[vertex] = false;
+            for (DirectedEdge edge: graph.adjacentTo(vertex)) {
+                relax(edge);
             }
         }
     }
@@ -32,6 +42,10 @@ public class BellmanFordShortestPaths implements ShortestPaths {
         if (distanceTo[w] > newDistance) {
             distanceTo[w] = newDistance;
             edgeTo[w] = edge;
+            if (!enqueuedVertices[w]) {
+                vertices.enqueue(w);
+                enqueuedVertices[w] = true;
+            }
         }
     }
 
