@@ -9,7 +9,7 @@ public class LSDRadixSortTest {
 
     @Test
     public void shouldSortStably() {
-        String[] input = new String[] {
+        String[] input = {
                 "dab",
                 "add",
                 "cab",
@@ -24,7 +24,7 @@ public class LSDRadixSortTest {
                 "ace"
         };
 
-        String[] sorted = new String[] {
+        String[] sorted = {
                 "ace",
                 "add",
                 "bad",
