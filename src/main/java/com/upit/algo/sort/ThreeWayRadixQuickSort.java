@@ -1,7 +1,6 @@
 package com.upit.algo.sort;
 
 public class ThreeWayRadixQuickSort {
-    private static int RADIX = 256;
 
     public void sort(String[] words) {
         sort(words, 0, words.length - 1, 0);
