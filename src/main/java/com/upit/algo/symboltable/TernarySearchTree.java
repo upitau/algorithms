@@ -125,31 +125,29 @@ public class TernarySearchTree<V> implements StringSymbolTable<V> {
     @Override
     public String longestPrefixOf(String query) {
         requireNotEmpty(query);
-        String longestPrefix = longestPrefixOf(root, query, 0);
-        return longestPrefix != null ? longestPrefix : "";
+        return query.substring(0, longestPrefixLength(root, query, 0, 0));
     }
 
-    private String longestPrefixOf(Node node, String s, int index) {
+    private int longestPrefixLength(Node node, String s, int index, int maxLength) {
         if (node == null) {
-            return null;
+            return maxLength;
         }
 
-        String nodePath = node.value != null ? s.substring(0, index + 1) : null;
+        if (node.value != null) {
+            maxLength = index + 1;
+        }
         if (index == s.length() - 1) {
-            return nodePath;
+            return maxLength;
         }
 
-        String longestPrefix;
         char ch = s.charAt(index);
         if (ch < node.ch) {
-            longestPrefix = longestPrefixOf(node.left, s, index);
+            return longestPrefixLength(node.left, s, index, maxLength);
         } else if (ch > node.ch) {
-            longestPrefix = longestPrefixOf(node.right, s, index);
+            return longestPrefixLength(node.right, s, index, maxLength);
         } else {
-            longestPrefix = longestPrefixOf(node.mid, s, index + 1);
+            return longestPrefixLength(node.mid, s, index + 1, maxLength);
         }
-
-        return longestPrefix != null ? longestPrefix : nodePath;
     }
 
     private void requireNotEmpty(String key) {
