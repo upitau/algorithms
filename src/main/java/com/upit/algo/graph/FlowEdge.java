@@ -1,7 +1,5 @@
 package com.upit.algo.graph;
 
-import java.util.NoSuchElementException;
-
 public class FlowEdge {
     private final int from;
     private final int to;

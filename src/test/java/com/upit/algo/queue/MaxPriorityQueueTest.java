@@ -1,5 +1,6 @@
-package com.upit.algo.other;
+package com.upit.algo.queue;
 
+import com.upit.algo.queue.MaxPriorityQueue;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;

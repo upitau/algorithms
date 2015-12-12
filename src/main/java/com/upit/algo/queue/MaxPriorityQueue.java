@@ -1,4 +1,4 @@
-package com.upit.algo.other;
+package com.upit.algo.queue;
 
 import java.util.Arrays;
 

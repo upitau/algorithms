@@ -1,6 +1,6 @@
 package com.upit.algo.graph;
 
-import com.upit.algo.other.IndexMinPriorityQueue;
+import com.upit.algo.queue.IndexMinPriorityQueue;
 import com.upit.algo.stack.ArrayStack;
 import com.upit.algo.stack.Stack;
 

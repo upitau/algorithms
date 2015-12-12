@@ -1,18 +1,18 @@
-package com.upit.algo.other;
+package com.upit.algo.queue;
 
 import java.util.Arrays;
 
-public class MinPriorityQueue {
+public class MinPriorityQueue<T extends Comparable<T>> {
     private static int MIN_SIZE = 16;
 
-    private Comparable[] items = new Comparable[MIN_SIZE];
+    private T[] items = (T[]) new Comparable[MIN_SIZE];
     private int size = 0;
 
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public void insert(Comparable item) {
+    public void insert(T item) {
         if (size == items.length) {
             items = Arrays.copyOf(items, size * 2);
         }
@@ -33,10 +33,10 @@ public class MinPriorityQueue {
         }
     }
 
-    public Comparable removeMin() {
+    public T removeMin() {
         checkNotEmpty();
 
-        Comparable minItem = items[0];
+        T minItem = items[0];
         swap(0, --size);
         sink(0);
 
@@ -45,6 +45,14 @@ public class MinPriorityQueue {
         }
 
         return minItem;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     private void checkNotEmpty() {
@@ -78,7 +86,7 @@ public class MinPriorityQueue {
     }
 
     private void swap(int i, int j) {
-        Comparable temp = items[i];
+        T temp = items[i];
         items[i] = items[j];
         items[j] = temp;
     }

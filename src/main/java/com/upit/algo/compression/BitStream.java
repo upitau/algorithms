@@ -8,10 +8,37 @@ public class BitStream implements Iterable<Boolean> {
     private int size;
 
     public boolean get(int index) {
+        checkIndex(index);
+        return bits.get(index);
+    }
+
+    public int getChunk(int index, int chunkSize) {
+        checkIndex(index);
+        checkChunkSize(chunkSize);
+        if (index + chunkSize > size) {
+            throw new IllegalArgumentException("Illegal index or chunk size");
+        }
+
+        int bits = 0;
+        for (int i = index; i < index + chunkSize && i < size; i++) {
+            bits <<= 1;
+            if (get(i)) {
+                bits++;
+            }
+        }
+        return bits;
+    }
+
+    private void checkIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Illegal index: " + index);
         }
-        return bits.get(index);
+    }
+
+    private void checkChunkSize(int chunkSize) {
+        if (chunkSize < 0 || chunkSize >= 32) {
+            throw new IllegalArgumentException("Illegal chunk size: " + chunkSize);
+        }
     }
 
     public void add(boolean bit) {
@@ -25,6 +52,7 @@ public class BitStream implements Iterable<Boolean> {
     }
 
     public void add(int chunkOfBits, int bitsInChunk) {
+        checkChunkSize(bitsInChunk);
         for (int i = 0; i < bitsInChunk; i++) {
             boolean bit = ((chunkOfBits >> (bitsInChunk - i - 1)) & 1) == 1;
             add(bit);
@@ -32,6 +60,7 @@ public class BitStream implements Iterable<Boolean> {
     }
 
     public void add(int[] chunksOfBits, int bitsInChunk) {
+        checkChunkSize(bitsInChunk);
         for (int i = 0; i < chunksOfBits.length; i++) {
             add(chunksOfBits[i], bitsInChunk);
         }
