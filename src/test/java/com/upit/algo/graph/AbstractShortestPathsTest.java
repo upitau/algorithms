@@ -12,7 +12,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public abstract class AbstractShortestPathsTest {
-    private ShortestPaths shortestPaths;
+    private DirectedTraversable directedTraversable;
 
     @Before
     public void init() {
@@ -34,15 +34,15 @@ public abstract class AbstractShortestPathsTest {
         graph.addEdge(new DirectedEdge(2, 6, 11));
         graph.addEdge(new DirectedEdge(3, 6, 9));
 
-        shortestPaths = createShortestPaths(graph, 0);
+        directedTraversable = createShortestPaths(graph, 0);
     }
 
-    abstract protected ShortestPaths createShortestPaths(EdgeWeightedDigraph graph, int source);
+    abstract protected DirectedTraversable createShortestPaths(EdgeWeightedDigraph graph, int source);
 
     @Test
     public void shouldHavePathsToAllVerteces() {
         for (int vertex = 0; vertex < 8; vertex++) {
-            assertThat(shortestPaths.hasPathTo(vertex), is(true));
+            assertThat(directedTraversable.hasPathTo(vertex), is(true));
         }
     }
 
@@ -50,14 +50,14 @@ public abstract class AbstractShortestPathsTest {
     public void shouldFindShortestDistances() {
         double[] expectedDistances = {0.0, 5.0, 14.0, 17.0, 9.0, 13.0, 25.0, 8.0};
         for (int vertex = 0; vertex < 8; vertex++) {
-            assertThat(shortestPaths.distanceTo(vertex), is(expectedDistances[vertex]));
+            assertThat(directedTraversable.distanceTo(vertex), is(expectedDistances[vertex]));
         }
     }
 
     @Test
     public void shouldFindCorrectPathToMostDistantVertex() {
         List<DirectedEdge> expectedPath = Arrays.asList(new DirectedEdge(0, 4, 9), new DirectedEdge(4, 5, 4), new DirectedEdge(5, 2, 1), new DirectedEdge(2, 6, 11));
-        List<DirectedEdge> actualPath = StreamSupport.stream(shortestPaths.pathTo(6).spliterator(), false)
+        List<DirectedEdge> actualPath = StreamSupport.stream(directedTraversable.pathTo(6).spliterator(), false)
                 .collect(Collectors.toList());
         assertThat(actualPath, is(expectedPath));
 

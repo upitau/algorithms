@@ -1,6 +1,6 @@
 package com.upit.algo.graph;
 
-public interface ShortestPaths {
+public interface DirectedTraversable {
 
     boolean hasPathTo(int vertex);
 

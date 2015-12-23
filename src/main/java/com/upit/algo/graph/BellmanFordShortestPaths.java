@@ -7,7 +7,7 @@ import com.upit.algo.stack.Stack;
 
 import java.util.Arrays;
 
-public class BellmanFordShortestPaths implements ShortestPaths {
+public class BellmanFordShortestPaths implements DirectedTraversable {
     private DirectedEdge[] edgeTo;
     private double[] distanceTo;
     private Queue<Integer> vertices = new ArrayQueue<>();

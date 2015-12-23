@@ -6,7 +6,7 @@ import com.upit.algo.stack.Stack;
 
 import java.util.Arrays;
 
-public class DijkstraShortestPaths implements ShortestPaths {
+public class DijkstraShortestPaths implements DirectedTraversable {
     private DirectedEdge[] edgeTo;
     private double[] distanceTo;
     private IndexMinPriorityQueue<Double> pq;

@@ -5,7 +5,7 @@ import com.upit.algo.stack.Stack;
 
 import java.util.Arrays;
 
-public class AcyclicShortestPaths implements ShortestPaths {
+public class AcyclicShortestPaths implements DirectedTraversable {
     private DirectedEdge[] edgeTo;
     private double[] distanceTo;
 
