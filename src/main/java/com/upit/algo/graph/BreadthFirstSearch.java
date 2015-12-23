@@ -7,14 +7,14 @@ import com.upit.algo.stack.Stack;
 
 import java.util.Arrays;
 
-public class BreadthFirstSearchPaths implements Paths {
+public class BreadthFirstSearch implements Traversable {
     private static int DISCONNECTED = -1;
 
     private int source;
     private int[] distanceTo;
     private int[] edgeTo;
 
-    public BreadthFirstSearchPaths(Graph graph, int source) {
+    public BreadthFirstSearch(Graph graph, int source) {
         this.source = source;
         this.distanceTo = new int[graph.numberOfVertices()];
         Arrays.fill(distanceTo, DISCONNECTED);

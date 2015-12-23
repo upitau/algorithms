@@ -3,12 +3,12 @@ package com.upit.algo.graph;
 import com.upit.algo.stack.ArrayStack;
 import com.upit.algo.stack.Stack;
 
-public class DepthFirstSearchPaths implements Paths {
+public class DepthFirstSearch implements Traversable {
     private int source;
     private boolean[] marked;
     private int[] edgeTo;
 
-    public DepthFirstSearchPaths(Graph graph, int source) {
+    public DepthFirstSearch(Graph graph, int source) {
         this.source = source;
         this.marked = new boolean[graph.numberOfVertices()];
         this.edgeTo = new int[graph.numberOfVertices()];

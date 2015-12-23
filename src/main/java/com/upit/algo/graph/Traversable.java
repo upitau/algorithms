@@ -1,6 +1,6 @@
 package com.upit.algo.graph;
 
-public interface Paths {
+public interface Traversable {
 
     boolean hasPathTo(int vertex);
 
